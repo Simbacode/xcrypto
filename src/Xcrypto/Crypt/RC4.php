@@ -23,7 +23,7 @@ namespace Simbacode\Xcrypto\Crypt;
  * <?php
  *    include('Crypt/RC4.php');
  *
- *    $rc4 = new Crypt_RC4();
+ *    $rc4 = new RC4();
  *
  *    $rc4->setKey('abcdefgh');
  *
@@ -56,7 +56,7 @@ namespace Simbacode\Xcrypto\Crypt;
  * THE SOFTWARE.
  *
  * @category   Crypt
- * @package    Crypt_RC4
+ * @package    RC4
  * @author     Jim Wigginton <terrafrost@php.net>
  * @copyright  MMVII Jim Wigginton
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
@@ -66,24 +66,24 @@ namespace Simbacode\Xcrypto\Crypt;
 
 /**#@+
  * @access private
- * @see Crypt_RC4::Crypt_RC4()
+ * @see RC4::RC4()
  */
 /**
  * Toggles the internal implementation
  */
-define('CRYPT_RC4_MODE_INTERNAL', 1);
+define('RC4_MODE_INTERNAL', 1);
 /**
  * Toggles the mcrypt implementation
  */
-define('CRYPT_RC4_MODE_MCRYPT', 2);
+define('RC4_MODE_MCRYPT', 2);
 /**#@-*/
 
 /**#@+
  * @access private
- * @see Crypt_RC4::_crypt()
+ * @see RC4::_crypt()
  */
-define('CRYPT_RC4_ENCRYPT', 0);
-define('CRYPT_RC4_DECRYPT', 1);
+define('RC4_ENCRYPT', 0);
+define('RC4_DECRYPT', 1);
 /**#@-*/
 
 /**
@@ -92,13 +92,13 @@ define('CRYPT_RC4_DECRYPT', 1);
  * @author  Jim Wigginton <terrafrost@php.net>
  * @version 0.1.0
  * @access  public
- * @package Crypt_RC4
+ * @package RC4
  */
-class Crypt_RC4 {
+class RC4 {
     /**
      * The Key
      *
-     * @see Crypt_RC4::setKey()
+     * @see RC4::setKey()
      * @var String
      * @access private
      */
@@ -107,9 +107,9 @@ class Crypt_RC4 {
     /**
      * The Key Stream for encryption
      *
-     * If CRYPT_RC4_MODE == CRYPT_RC4_MODE_MCRYPT, this will be equal to the mcrypt object
+     * If RC4_MODE == RC4_MODE_MCRYPT, this will be equal to the mcrypt object
      *
-     * @see Crypt_RC4::setKey()
+     * @see RC4::setKey()
      * @var Array
      * @access private
      */
@@ -118,9 +118,9 @@ class Crypt_RC4 {
     /**
      * The Key Stream for decryption
      *
-     * If CRYPT_RC4_MODE == CRYPT_RC4_MODE_MCRYPT, this will be equal to the mcrypt object
+     * If RC4_MODE == RC4_MODE_MCRYPT, this will be equal to the mcrypt object
      *
-     * @see Crypt_RC4::setKey()
+     * @see RC4::setKey()
      * @var Array
      * @access private
      */
@@ -129,7 +129,7 @@ class Crypt_RC4 {
     /**
      * The $i and $j indexes for encryption
      *
-     * @see Crypt_RC4::_crypt()
+     * @see RC4::_crypt()
      * @var Integer
      * @access private
      */
@@ -138,7 +138,7 @@ class Crypt_RC4 {
     /**
      * The $i and $j indexes for decryption
      *
-     * @see Crypt_RC4::_crypt()
+     * @see RC4::_crypt()
      * @var Integer
      * @access private
      */
@@ -147,7 +147,7 @@ class Crypt_RC4 {
     /**
      * MCrypt parameters
      *
-     * @see Crypt_RC4::setMCrypt()
+     * @see RC4::setMCrypt()
      * @var Array
      * @access private
      */
@@ -156,9 +156,9 @@ class Crypt_RC4 {
     /**
      * The Encryption Algorithm
      *
-     * Only used if CRYPT_RC4_MODE == CRYPT_RC4_MODE_MCRYPT.  Only possible values are MCRYPT_RC4 or MCRYPT_ARCFOUR.
+     * Only used if RC4_MODE == RC4_MODE_MCRYPT.  Only possible values are MRC4 or MCRYPT_ARCFOUR.
      *
-     * @see Crypt_RC4::Crypt_RC4()
+     * @see RC4::RC4()
      * @var Integer
      * @access private
      */
@@ -167,7 +167,7 @@ class Crypt_RC4 {
     /**
      * Continuous Buffer status
      *
-     * @see Crypt_RC4::enableContinuousBuffer()
+     * @see RC4::enableContinuousBuffer()
      * @var Boolean
      * @access private
      */
@@ -179,32 +179,32 @@ class Crypt_RC4 {
      * Determines whether or not the mcrypt extension should be used.
      *
      * @param optional Integer $mode
-     * @return Crypt_RC4
+     * @return RC4
      * @access public
      */
-    function Crypt_RC4()
+    function RC4()
     {
-        if ( !defined('CRYPT_RC4_MODE') ) {
+        if ( !defined('RC4_MODE') ) {
             switch (true) {
-                case extension_loaded('mcrypt') && (defined('MCRYPT_ARCFOUR') || defined('MCRYPT_RC4')):
+                case extension_loaded('mcrypt') && (defined('MCRYPT_ARCFOUR') || defined('MRC4')):
                     // i'd check to see if rc4 was supported, by doing in_array('arcfour', mcrypt_list_algorithms('')),
                     // but since that can be changed after the object has been created, there doesn't seem to be
                     // a lot of point...
-                    define('CRYPT_RC4_MODE', CRYPT_RC4_MODE_MCRYPT);
+                    define('RC4_MODE', RC4_MODE_MCRYPT);
                     break;
                 default:
-                    define('CRYPT_RC4_MODE', CRYPT_RC4_MODE_INTERNAL);
+                    define('RC4_MODE', RC4_MODE_INTERNAL);
             }
         }
 
-        switch ( CRYPT_RC4_MODE ) {
-            case CRYPT_RC4_MODE_MCRYPT:
+        switch ( RC4_MODE ) {
+            case RC4_MODE_MCRYPT:
                 switch (true) {
                     case defined('MCRYPT_ARCFOUR'):
                         $this->mode = MCRYPT_ARCFOUR;
                         break;
-                    case defined('MCRYPT_RC4');
-                        $this->mode = MCRYPT_RC4;
+                    case defined('MRC4');
+                        $this->mode = MRC4;
                 }
         }
     }
@@ -222,7 +222,7 @@ class Crypt_RC4 {
     {
         $this->key = $key;
 
-        if ( CRYPT_RC4_MODE == CRYPT_RC4_MODE_MCRYPT ) {
+        if ( RC4_MODE == RC4_MODE_MCRYPT ) {
             return;
         }
 
@@ -259,7 +259,7 @@ class Crypt_RC4 {
      * {@link http://en.wikipedia.org/wiki/Related_key_attack http://en.wikipedia.org/wiki/Related_key_attack}
      *
      * @param String $iv
-     * @see Crypt_RC4::setKey()
+     * @see RC4::setKey()
      * @access public
      */
     function setIV($iv)
@@ -278,7 +278,7 @@ class Crypt_RC4 {
      */
     function setMCrypt($algorithm_directory = '', $mode_directory = '')
     {
-        if ( CRYPT_RC4_MODE == CRYPT_RC4_MODE_MCRYPT ) {
+        if ( RC4_MODE == RC4_MODE_MCRYPT ) {
             $this->mcrypt = array($algorithm_directory, $mode_directory);
             $this->_closeMCrypt();
         }
@@ -287,13 +287,13 @@ class Crypt_RC4 {
     /**
      * Encrypts a message.
      *
-     * @see Crypt_RC4::_crypt()
+     * @see RC4::_crypt()
      * @access public
      * @param String $plaintext
      */
     function encrypt($plaintext)
     {
-        return $this->_crypt($plaintext, CRYPT_RC4_ENCRYPT);
+        return $this->_crypt($plaintext, RC4_ENCRYPT);
     }
 
     /**
@@ -302,28 +302,28 @@ class Crypt_RC4 {
      * $this->decrypt($this->encrypt($plaintext)) == $this->encrypt($this->encrypt($plaintext)).
      * Atleast if the continuous buffer is disabled.
      *
-     * @see Crypt_RC4::_crypt()
+     * @see RC4::_crypt()
      * @access public
      * @param String $ciphertext
      */
     function decrypt($ciphertext)
     {
-        return $this->_crypt($ciphertext, CRYPT_RC4_DECRYPT);
+        return $this->_crypt($ciphertext, RC4_DECRYPT);
     }
 
     /**
      * Encrypts or decrypts a message.
      *
-     * @see Crypt_RC4::encrypt()
-     * @see Crypt_RC4::decrypt()
+     * @see RC4::encrypt()
+     * @see RC4::decrypt()
      * @access private
      * @param String $text
      * @param Integer $mode
      */
     function _crypt($text, $mode)
     {
-        if ( CRYPT_RC4_MODE == CRYPT_RC4_MODE_MCRYPT ) {
-            $keyStream = $mode == CRYPT_RC4_ENCRYPT ? 'encryptStream' : 'decryptStream';
+        if ( RC4_MODE == RC4_MODE_MCRYPT ) {
+            $keyStream = $mode == RC4_ENCRYPT ? 'encryptStream' : 'decryptStream';
 
             if ($this->$keyStream === false) {
                 $this->$keyStream = mcrypt_module_open($this->mode, $this->mcrypt[0], MCRYPT_MODE_STREAM, $this->mcrypt[1]);
@@ -344,11 +344,11 @@ class Crypt_RC4 {
         }
 
         switch ($mode) {
-            case CRYPT_RC4_ENCRYPT:
+            case RC4_ENCRYPT:
                 $keyStream = $this->encryptStream;
                 list($i, $j) = $this->encryptIndex;
                 break;
-            case CRYPT_RC4_DECRYPT:
+            case RC4_DECRYPT:
                 $keyStream = $this->decryptStream;
                 list($i, $j) = $this->decryptIndex;
         }
@@ -366,11 +366,11 @@ class Crypt_RC4 {
 
         if ($this->continuousBuffer) {
             switch ($mode) {
-                case CRYPT_RC4_ENCRYPT:
+                case RC4_ENCRYPT:
                     $this->encryptStream = $keyStream;
                     $this->encryptIndex = array($i, $j);
                     break;
-                case CRYPT_RC4_DECRYPT:
+                case RC4_DECRYPT:
                     $this->decryptStream = $keyStream;
                     $this->decryptIndex = array($i, $j);
             }
@@ -408,12 +408,12 @@ class Crypt_RC4 {
      * outputs.  The reason is due to the fact that the initialization vector's change after every encryption /
      * decryption round when the continuous buffer is enabled.  When it's disabled, they remain constant.
      *
-     * Put another way, when the continuous buffer is enabled, the state of the Crypt_DES() object changes after each
+     * Put another way, when the continuous buffer is enabled, the state of the DES() object changes after each
      * encryption / decryption round, whereas otherwise, it'd remain constant.  For this reason, it's recommended that
      * continuous buffers not be used.  They do offer better security and are, in fact, sometimes required (SSH uses them),
      * however, they are also less intuitive and more likely to cause you problems.
      *
-     * @see Crypt_RC4::disableContinuousBuffer()
+     * @see RC4::disableContinuousBuffer()
      * @access public
      */
     function enableContinuousBuffer()
@@ -426,12 +426,12 @@ class Crypt_RC4 {
      *
      * The default behavior.
      *
-     * @see Crypt_RC4::enableContinuousBuffer()
+     * @see RC4::enableContinuousBuffer()
      * @access public
      */
     function disableContinuousBuffer()
     {
-        if ( CRYPT_RC4_MODE == CRYPT_RC4_MODE_INTERNAL ) {
+        if ( RC4_MODE == RC4_MODE_INTERNAL ) {
             $this->encryptIndex = $this->decryptIndex = array(0, 0);
             $this->setKey($this->key);
         }
@@ -445,7 +445,7 @@ class Crypt_RC4 {
      * Since RC4 is a stream cipher and not a block cipher, no padding is necessary.  The only reason this function is
      * included is so that you can switch between a block cipher and a stream cipher transparently.
      *
-     * @see Crypt_RC4::disablePadding()
+     * @see RC4::disablePadding()
      * @access public
      */
     function enablePadding()
@@ -455,7 +455,7 @@ class Crypt_RC4 {
     /**
      * Dummy function.
      *
-     * @see Crypt_RC4::enablePadding()
+     * @see RC4::enablePadding()
      * @access public
      */
     function disablePadding()
@@ -472,7 +472,7 @@ class Crypt_RC4 {
      */
     function __destruct()
     {
-        if ( CRYPT_RC4_MODE == CRYPT_RC4_MODE_MCRYPT ) {
+        if ( RC4_MODE == RC4_MODE_MCRYPT ) {
             $this->_closeMCrypt();
         }
     }

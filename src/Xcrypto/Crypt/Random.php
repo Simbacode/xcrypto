@@ -13,7 +13,7 @@ namespace Simbacode\Xcrypto\Crypt;
  * <?php
  *    include('Crypt/Random.php');
  *
- *    echo crypt_random();
+ *    echo Random();
  * ?>
  * </code>
  *
@@ -36,7 +36,7 @@ namespace Simbacode\Xcrypto\Crypt;
  * THE SOFTWARE.
  *
  * @category   Crypt
- * @package    Crypt_Random
+ * @package    Random
  * @author     Jim Wigginton <terrafrost@php.net>
  * @copyright  MMVII Jim Wigginton
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
@@ -59,7 +59,7 @@ namespace Simbacode\Xcrypto\Crypt;
  * @return Integer
  * @access public
  */
-function crypt_random($min = 0, $max = 0x7FFFFFFF)
+function Random($min = 0, $max = 0x7FFFFFFF)
 {
     if ($min == $max) {
         return $min;
@@ -108,17 +108,17 @@ function crypt_random($min = 0, $max = 0x7FFFFFFF)
             $iv .= pack('n', mt_rand(0, 0xFFFF));
         }
         switch (true) {
-            case class_exists('Crypt_AES'):
-                $crypto = new Crypt_AES(CRYPT_AES_MODE_CTR);
+            case class_exists('AES'):
+                $crypto = new AES(AES_MODE_CTR);
                 break;
-            case class_exists('Crypt_TripleDES'):
-                $crypto = new Crypt_TripleDES(CRYPT_DES_MODE_CTR);
+            case class_exists('TripleDES'):
+                $crypto = new TripleDES(DES_MODE_CTR);
                 break;
-            case class_exists('Crypt_DES'):
-                $crypto = new Crypt_DES(CRYPT_DES_MODE_CTR);
+            case class_exists('DES'):
+                $crypto = new DES(DES_MODE_CTR);
                 break;
-            case class_exists('Crypt_RC4'):
-                $crypto = new Crypt_RC4();
+            case class_exists('RC4'):
+                $crypto = new RC4();
                 break;
             default:
                 extract(unpack('Nrandom', pack('H*', sha1(mt_rand(0, 0x7FFFFFFF)))));

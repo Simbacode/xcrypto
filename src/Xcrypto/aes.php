@@ -19,9 +19,9 @@
 // along with the C# to PHP Encryption Library.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-use Simbacode\Xcrypto\Crypt\Crypt_AES;
+use Simbacode\Xcrypto\Crypt\AES;
 
-$aes = new Crypt_AES();
+$aes = new AES();
 
 $aes->setKey('abcdefghijklmnopabcdefghijklmnop');
 $aes->setIV('abcdefghijklmnop');

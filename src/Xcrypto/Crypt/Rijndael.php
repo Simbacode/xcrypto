@@ -10,11 +10,11 @@ namespace Simbacode\Xcrypto\Crypt;
  *
  * PHP versions 4 and 5
  *
- * If {@link Crypt_Rijndael::setBlockLength() setBlockLength()} isn't called, it'll be assumed to be 128 bits.  If 
- * {@link Crypt_Rijndael::setKeyLength() setKeyLength()} isn't called, it'll be calculated from 
- * {@link Crypt_Rijndael::setKey() setKey()}.  ie. if the key is 128-bits, the key length will be 128-bits.  If it's 
+ * If {@link Rijndael::setBlockLength() setBlockLength()} isn't called, it'll be assumed to be 128 bits.  If 
+ * {@link Rijndael::setKeyLength() setKeyLength()} isn't called, it'll be calculated from 
+ * {@link Rijndael::setKey() setKey()}.  ie. if the key is 128-bits, the key length will be 128-bits.  If it's 
  * 136-bits it'll be null-padded to 160-bits and 160 bits will be the key length until 
- * {@link Crypt_Rijndael::setKey() setKey()} is called, again, at which point, it'll be recalculated.
+ * {@link Rijndael::setKey() setKey()} is called, again, at which point, it'll be recalculated.
  *
  * Not all Rijndael implementations may support 160-bits or 224-bits as the block length / key length.  mcrypt, for example,
  * does not.  AES, itself, only supports block lengths of 128 and key lengths of 128, 192, and 256.
@@ -32,7 +32,7 @@ namespace Simbacode\Xcrypto\Crypt;
  * <?php
  *    include('Crypt/Rijndael.php');
  *
- *    $rijndael = new Crypt_Rijndael();
+ *    $rijndael = new Rijndael();
  *
  *    $rijndael->setKey('abcdefghijklmnop');
  *
@@ -65,7 +65,7 @@ namespace Simbacode\Xcrypto\Crypt;
  * THE SOFTWARE.
  *
  * @category   Crypt
- * @package    Crypt_Rijndael
+ * @package    Rijndael
  * @author     Jim Wigginton <terrafrost@php.net>
  * @copyright  MMVIII Jim Wigginton
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
@@ -75,8 +75,8 @@ namespace Simbacode\Xcrypto\Crypt;
 
 /**#@+
  * @access public
- * @see Crypt_Rijndael::encrypt()
- * @see Crypt_Rijndael::decrypt()
+ * @see Rijndael::encrypt()
+ * @see Rijndael::decrypt()
  */
 /**
  * Encrypt / decrypt using the Counter mode.
@@ -85,45 +85,45 @@ namespace Simbacode\Xcrypto\Crypt;
  *
  * @link http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation#Counter_.28CTR.29
  */
-define('CRYPT_RIJNDAEL_MODE_CTR', -1);
+define('Rijndael_MODE_CTR', -1);
 /**
  * Encrypt / decrypt using the Electronic Code Book mode.
  *
  * @link http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation#Electronic_codebook_.28ECB.29
  */
-define('CRYPT_RIJNDAEL_MODE_ECB', 1);
+define('Rijndael_MODE_ECB', 1);
 /**
  * Encrypt / decrypt using the Code Book Chaining mode.
  *
  * @link http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation#Cipher-block_chaining_.28CBC.29
  */
-define('CRYPT_RIJNDAEL_MODE_CBC', 2);
+define('Rijndael_MODE_CBC', 2);
 /**
  * Encrypt / decrypt using the Cipher Feedback mode.
  *
  * @link http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation#Cipher_feedback_.28CFB.29
  */
-define('CRYPT_RIJNDAEL_MODE_CFB', 3);
+define('Rijndael_MODE_CFB', 3);
 /**
  * Encrypt / decrypt using the Cipher Feedback mode.
  *
  * @link http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation#Output_feedback_.28OFB.29
  */
-define('CRYPT_RIJNDAEL_MODE_OFB', 4);
+define('Rijndael_MODE_OFB', 4);
 /**#@-*/
 
 /**#@+
  * @access private
- * @see Crypt_Rijndael::Crypt_Rijndael()
+ * @see Rijndael::Rijndael()
  */
 /**
  * Toggles the internal implementation
  */
-define('CRYPT_RIJNDAEL_MODE_INTERNAL', 1);
+define('Rijndael_MODE_INTERNAL', 1);
 /**
  * Toggles the mcrypt implementation
  */
-define('CRYPT_RIJNDAEL_MODE_MCRYPT', 2);
+define('Rijndael_MODE_MCRYPT', 2);
 /**#@-*/
 
 /**
@@ -132,13 +132,13 @@ define('CRYPT_RIJNDAEL_MODE_MCRYPT', 2);
  * @author  Jim Wigginton <terrafrost@php.net>
  * @version 0.1.0
  * @access  public
- * @package Crypt_Rijndael
+ * @package Rijndael
  */
-class Crypt_Rijndael {
+class Rijndael {
     /**
      * The Encryption Mode
      *
-     * @see Crypt_Rijndael::Crypt_Rijndael()
+     * @see Rijndael::Rijndael()
      * @var Integer
      * @access private
      */
@@ -147,7 +147,7 @@ class Crypt_Rijndael {
     /**
      * The Key
      *
-     * @see Crypt_Rijndael::setKey()
+     * @see Rijndael::setKey()
      * @var String
      * @access private
      */
@@ -156,7 +156,7 @@ class Crypt_Rijndael {
     /**
      * The Initialization Vector
      *
-     * @see Crypt_Rijndael::setIV()
+     * @see Rijndael::setIV()
      * @var String
      * @access private
      */
@@ -165,7 +165,7 @@ class Crypt_Rijndael {
     /**
      * A "sliding" Initialization Vector
      *
-     * @see Crypt_Rijndael::enableContinuousBuffer()
+     * @see Rijndael::enableContinuousBuffer()
      * @var String
      * @access private
      */
@@ -174,7 +174,7 @@ class Crypt_Rijndael {
     /**
      * A "sliding" Initialization Vector
      *
-     * @see Crypt_Rijndael::enableContinuousBuffer()
+     * @see Rijndael::enableContinuousBuffer()
      * @var String
      * @access private
      */
@@ -183,7 +183,7 @@ class Crypt_Rijndael {
     /**
      * Continuous Buffer status
      *
-     * @see Crypt_Rijndael::enableContinuousBuffer()
+     * @see Rijndael::enableContinuousBuffer()
      * @var Boolean
      * @access private
      */
@@ -192,7 +192,7 @@ class Crypt_Rijndael {
     /**
      * Padding status
      *
-     * @see Crypt_Rijndael::enablePadding()
+     * @see Rijndael::enablePadding()
      * @var Boolean
      * @access private
      */
@@ -304,7 +304,7 @@ class Crypt_Rijndael {
     /**
      * Precomputed mixColumns table
      *
-     * @see Crypt_Rijndael()
+     * @see Rijndael()
      * @var Array
      * @access private
      */
@@ -313,7 +313,7 @@ class Crypt_Rijndael {
     /**
      * Precomputed mixColumns table
      *
-     * @see Crypt_Rijndael()
+     * @see Rijndael()
      * @var Array
      * @access private
      */
@@ -322,7 +322,7 @@ class Crypt_Rijndael {
     /**
      * Precomputed mixColumns table
      *
-     * @see Crypt_Rijndael()
+     * @see Rijndael()
      * @var Array
      * @access private
      */
@@ -331,7 +331,7 @@ class Crypt_Rijndael {
     /**
      * Precomputed mixColumns table
      *
-     * @see Crypt_Rijndael()
+     * @see Rijndael()
      * @var Array
      * @access private
      */
@@ -340,7 +340,7 @@ class Crypt_Rijndael {
     /**
      * Precomputed invMixColumns table
      *
-     * @see Crypt_Rijndael()
+     * @see Rijndael()
      * @var Array
      * @access private
      */
@@ -349,7 +349,7 @@ class Crypt_Rijndael {
     /**
      * Precomputed invMixColumns table
      *
-     * @see Crypt_Rijndael()
+     * @see Rijndael()
      * @var Array
      * @access private
      */
@@ -358,7 +358,7 @@ class Crypt_Rijndael {
     /**
      * Precomputed invMixColumns table
      *
-     * @see Crypt_Rijndael()
+     * @see Rijndael()
      * @var Array
      * @access private
      */
@@ -367,7 +367,7 @@ class Crypt_Rijndael {
     /**
      * Precomputed invMixColumns table
      *
-     * @see Crypt_Rijndael()
+     * @see Rijndael()
      * @var Array
      * @access private
      */
@@ -376,7 +376,7 @@ class Crypt_Rijndael {
     /**
      * Is the mode one that is paddable?
      *
-     * @see Crypt_Rijndael::Crypt_Rijndael()
+     * @see Rijndael::Rijndael()
      * @var Boolean
      * @access private
      */
@@ -385,7 +385,7 @@ class Crypt_Rijndael {
     /**
      * Encryption buffer for CTR, OFB and CFB modes
      *
-     * @see Crypt_Rijndael::encrypt()
+     * @see Rijndael::encrypt()
      * @var String
      * @access private
      */
@@ -394,7 +394,7 @@ class Crypt_Rijndael {
     /**
      * Decryption buffer for CTR, OFB and CFB modes
      *
-     * @see Crypt_Rijndael::decrypt()
+     * @see Rijndael::decrypt()
      * @var String
      * @access private
      */
@@ -404,28 +404,28 @@ class Crypt_Rijndael {
      * Default Constructor.
      *
      * Determines whether or not the mcrypt extension should be used.  $mode should only, at present, be
-     * CRYPT_RIJNDAEL_MODE_ECB or CRYPT_RIJNDAEL_MODE_CBC.  If not explictly set, CRYPT_RIJNDAEL_MODE_CBC will be used.
+     * Rijndael_MODE_ECB or Rijndael_MODE_CBC.  If not explictly set, Rijndael_MODE_CBC will be used.
      *
      * @param optional Integer $mode
-     * @return Crypt_Rijndael
+     * @return Rijndael
      * @access public
      */
-    function Crypt_Rijndael($mode = CRYPT_RIJNDAEL_MODE_CBC)
+    function Rijndael($mode = Rijndael_MODE_CBC)
     {
         switch ($mode) {
-            case CRYPT_RIJNDAEL_MODE_ECB:
-            case CRYPT_RIJNDAEL_MODE_CBC:
+            case Rijndael_MODE_ECB:
+            case Rijndael_MODE_CBC:
                 $this->paddable = true;
                 $this->mode = $mode;
                 break;
-            case CRYPT_RIJNDAEL_MODE_CTR:
-            case CRYPT_RIJNDAEL_MODE_CFB:
-            case CRYPT_RIJNDAEL_MODE_OFB:
+            case Rijndael_MODE_CTR:
+            case Rijndael_MODE_CFB:
+            case Rijndael_MODE_OFB:
                 $this->mode = $mode;
                 break;
             default:
                 $this->paddable = true;
-                $this->mode = CRYPT_RIJNDAEL_MODE_CBC;
+                $this->mode = Rijndael_MODE_CBC;
         }
 
         $t3 = &$this->t3;
@@ -544,7 +544,7 @@ class Crypt_Rijndael {
     /**
      * Sets the initialization vector. (optional)
      *
-     * SetIV is not required when CRYPT_RIJNDAEL_MODE_ECB is being used.  If not explictly set, it'll be assumed
+     * SetIV is not required when Rijndael_MODE_ECB is being used.  If not explictly set, it'll be assumed
      * to be all zero's.
      *
      * @access public
@@ -607,8 +607,8 @@ class Crypt_Rijndael {
      * Encrypt the output of this and XOR it against the ciphertext / plaintext to get the
      * plaintext / ciphertext in CTR mode.
      *
-     * @see Crypt_Rijndael::decrypt()
-     * @see Crypt_Rijndael::encrypt()
+     * @see Rijndael::decrypt()
+     * @see Rijndael::encrypt()
      * @access public
      * @param Integer $length
      * @param String $iv
@@ -654,7 +654,7 @@ class Crypt_Rijndael {
      * strlen($plaintext) will still need to be a multiple of 8, however, arbitrary values can be added to make it that
      * length.
      *
-     * @see Crypt_Rijndael::decrypt()
+     * @see Rijndael::decrypt()
      * @access public
      * @param String $plaintext
      */
@@ -670,12 +670,12 @@ class Crypt_Rijndael {
         $continuousBuffer = $this->continuousBuffer;
         $ciphertext = '';
         switch ($this->mode) {
-            case CRYPT_RIJNDAEL_MODE_ECB:
+            case Rijndael_MODE_ECB:
                 for ($i = 0; $i < strlen($plaintext); $i+=$block_size) {
                     $ciphertext.= $this->_encryptBlock(substr($plaintext, $i, $block_size));
                 }
                 break;
-            case CRYPT_RIJNDAEL_MODE_CBC:
+            case Rijndael_MODE_CBC:
                 $xor = $this->encryptIV;
                 for ($i = 0; $i < strlen($plaintext); $i+=$block_size) {
                     $block = substr($plaintext, $i, $block_size);
@@ -687,7 +687,7 @@ class Crypt_Rijndael {
                     $this->encryptIV = $xor;
                 }
                 break;
-            case CRYPT_RIJNDAEL_MODE_CTR:
+            case Rijndael_MODE_CTR:
                 $xor = $this->encryptIV;
                 if (!empty($buffer)) {
                     for ($i = 0; $i < strlen($plaintext); $i+=$block_size) {
@@ -710,7 +710,7 @@ class Crypt_Rijndael {
                     }
                 }
                 break;
-            case CRYPT_RIJNDAEL_MODE_CFB:
+            case Rijndael_MODE_CFB:
                 if (!empty($buffer['xor'])) {
                     $ciphertext = $plaintext ^ $buffer['xor'];
                     $iv = $buffer['encrypted'] . $ciphertext;
@@ -740,7 +740,7 @@ class Crypt_Rijndael {
                     $this->encryptIV = $iv;
                 }
                 break;
-            case CRYPT_RIJNDAEL_MODE_OFB:
+            case Rijndael_MODE_OFB:
                 $xor = $this->encryptIV;
                 if (strlen($buffer)) {
                     for ($i = 0; $i < strlen($plaintext); $i+=$block_size) {
@@ -773,7 +773,7 @@ class Crypt_Rijndael {
      * If strlen($ciphertext) is not a multiple of the block size, null bytes will be added to the end of the string until
      * it is.
      *
-     * @see Crypt_Rijndael::encrypt()
+     * @see Rijndael::encrypt()
      * @access public
      * @param String $ciphertext
      */
@@ -792,12 +792,12 @@ class Crypt_Rijndael {
         $continuousBuffer = $this->continuousBuffer;
         $plaintext = '';
         switch ($this->mode) {
-            case CRYPT_RIJNDAEL_MODE_ECB:
+            case Rijndael_MODE_ECB:
                 for ($i = 0; $i < strlen($ciphertext); $i+=$block_size) {
                     $plaintext.= $this->_decryptBlock(substr($ciphertext, $i, $block_size));
                 }
                 break;
-            case CRYPT_RIJNDAEL_MODE_CBC:
+            case Rijndael_MODE_CBC:
                 $xor = $this->decryptIV;
                 for ($i = 0; $i < strlen($ciphertext); $i+=$block_size) {
                     $block = substr($ciphertext, $i, $block_size);
@@ -808,7 +808,7 @@ class Crypt_Rijndael {
                     $this->decryptIV = $xor;
                 }
                 break;
-            case CRYPT_RIJNDAEL_MODE_CTR:
+            case Rijndael_MODE_CTR:
                 $xor = $this->decryptIV;
                 if (strlen($buffer)) {
                     for ($i = 0; $i < strlen($ciphertext); $i+=$block_size) {
@@ -831,7 +831,7 @@ class Crypt_Rijndael {
                     }
                 }
                 break;
-            case CRYPT_RIJNDAEL_MODE_CFB:
+            case Rijndael_MODE_CFB:
                 if (!empty($buffer['ciphertext'])) {
                     $plaintext = $ciphertext ^ substr($this->decryptIV, strlen($buffer['ciphertext']));
                     $buffer['ciphertext'].= substr($ciphertext, 0, strlen($plaintext));
@@ -861,7 +861,7 @@ class Crypt_Rijndael {
                     $this->decryptIV = $block;
                 }
                 break;
-            case CRYPT_RIJNDAEL_MODE_OFB:
+            case Rijndael_MODE_OFB:
                 $xor = $this->decryptIV;
                 if (strlen($buffer)) {
                     for ($i = 0; $i < strlen($ciphertext); $i+=$block_size) {
@@ -1273,7 +1273,7 @@ class Crypt_Rijndael {
      * away characters that shouldn't be stripped away. (SSH knows how many bytes are added because the length is
      * transmitted separately)
      *
-     * @see Crypt_Rijndael::disablePadding()
+     * @see Rijndael::disablePadding()
      * @access public
      */
     function enablePadding()
@@ -1284,7 +1284,7 @@ class Crypt_Rijndael {
     /**
      * Do not pad packets.
      *
-     * @see Crypt_Rijndael::enablePadding()
+     * @see Rijndael::enablePadding()
      * @access public
      */
     function disablePadding()
@@ -1302,7 +1302,7 @@ class Crypt_Rijndael {
      * If padding is disabled and $text is not a multiple of the blocksize, the string will be padded regardless
      * and padding will, hence forth, be enabled.
      *
-     * @see Crypt_Rijndael::_unpad()
+     * @see Rijndael::_unpad()
      * @access private
      */
     function _pad($text)
@@ -1329,7 +1329,7 @@ class Crypt_Rijndael {
      * If padding is enabled and the reported padding length is invalid the encryption key will be assumed to be wrong
      * and false will be returned.
      *
-     * @see Crypt_Rijndael::_pad()
+     * @see Rijndael::_pad()
      * @access private
      */
     function _unpad($text)
@@ -1376,12 +1376,12 @@ class Crypt_Rijndael {
      * outputs.  The reason is due to the fact that the initialization vector's change after every encryption /
      * decryption round when the continuous buffer is enabled.  When it's disabled, they remain constant.
      *
-     * Put another way, when the continuous buffer is enabled, the state of the Crypt_Rijndael() object changes after each
+     * Put another way, when the continuous buffer is enabled, the state of the Rijndael() object changes after each
      * encryption / decryption round, whereas otherwise, it'd remain constant.  For this reason, it's recommended that
      * continuous buffers not be used.  They do offer better security and are, in fact, sometimes required (SSH uses them),
      * however, they are also less intuitive and more likely to cause you problems.
      *
-     * @see Crypt_Rijndael::disableContinuousBuffer()
+     * @see Rijndael::disableContinuousBuffer()
      * @access public
      */
     function enableContinuousBuffer()
@@ -1394,7 +1394,7 @@ class Crypt_Rijndael {
      *
      * The default behavior.
      *
-     * @see Crypt_Rijndael::enableContinuousBuffer()
+     * @see Rijndael::enableContinuousBuffer()
      * @access public
      */
     function disableContinuousBuffer()

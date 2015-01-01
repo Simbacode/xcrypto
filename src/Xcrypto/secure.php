@@ -21,8 +21,8 @@
 
 namespace Simbacode\Xcrypto;
 
-use Simbacode\Xcrypto\Crypt\Crypt_RSA;
-use Simbacode\Xcrypto\Crypt\Crypt_AES;
+use Simbacode\Xcrypto\Crypt\RSA;
+use Simbacode\Xcrypto\Crypt\AES;
 
 //$PrivateKeyFile = "private.key";
 //$PublicKeyFile  = "public.crt";
@@ -67,8 +67,8 @@ if (isset($_POST['key']) && isset($_POST['iv']))
 {
    include($PrivateKeyFile);
 
-   $rsa = new Crypt_RSA();
-   $rsa->setEncryptionMode(CRYPT_RSA_ENCRYPTION_PKCS1);
+   $rsa = new RSA();
+   $rsa->setEncryptionMode(RSA_ENCRYPTION_PKCS1);
    $rsa->loadKey($PrivateRSAKey);
 
    $_SESSION['key'] = Base64UrlEncode($rsa->decrypt(Base64UrlDecode($_POST['key'])));
@@ -82,7 +82,7 @@ if (isset($_POST['key']) && isset($_POST['iv']))
 //
 if ((isset($_SESSION['key']) && isset($_SESSION['iv'])) && isset($_POST['data']))
 {
-   $aes = new Crypt_AES(CRYPT_AES_MODE_CBC);
+   $aes = new AES(AES_MODE_CBC);
 
    $aes->setKeyLength(256);
    $aes->setKey(Base64UrlDecode($_SESSION['key']));
@@ -112,7 +112,7 @@ if ((isset($_SESSION['key']) && isset($_SESSION['iv'])) && isset($_POST['data'])
 //
 function SendEncryptedResponse($message)
 {
-   $aes = new Crypt_AES(CRYPT_AES_MODE_CBC);
+   $aes = new AES(AES_MODE_CBC);
 
    $aes->setKeyLength(256);
    $aes->setKey(Base64UrlDecode($_SESSION['key']));

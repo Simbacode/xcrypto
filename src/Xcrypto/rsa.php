@@ -19,13 +19,13 @@
 // along with the C# to PHP Encryption Library.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-use Simbacode\Xcrypto\Crypt\Crypt_RSA;
+use Simbacode\Xcrypto\Crypt\RSA;
 
 $code = str_replace(array('_','-'), array('/','+'), $_POST['code']);
 $code = base64_decode($code);
 
-$rsa = new Crypt_RSA();
-$rsa->setEncryptionMode(CRYPT_RSA_ENCRYPTION_PKCS1);
+$rsa = new RSA();
+$rsa->setEncryptionMode(RSA_ENCRYPTION_PKCS1);
 
 // The key is hardcoded in on both the client and server side of this example
 $rsa->loadKey("-----BEGIN RSA PRIVATE KEY-----
