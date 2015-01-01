@@ -11,7 +11,14 @@ http://www.codeproject.com/Articles/223081/Encrypting-Communication-between-Csha
 
 
 ## Encryption Algorithms ##
-* pesapal 
+* AES
+* DES
+* Hash
+* RC4
+* RSA
+* Random
+* Rijndael
+* TripleDES 
 
 
 ## How to use ##
