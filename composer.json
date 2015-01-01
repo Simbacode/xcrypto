@@ -20,12 +20,12 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"Xcrypto\\": "src"
+			"Simbacode\\": "src"
 		}
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"Xcrypto\\Test\\": "tests"
+			"Simbacode\\Test\\": "tests"
 		}
 	}
 }
