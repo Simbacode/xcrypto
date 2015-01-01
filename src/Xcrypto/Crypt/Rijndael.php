@@ -410,7 +410,7 @@ class Rijndael {
      * @return Rijndael
      * @access public
      */
-    function Rijndael($mode = Rijndael_MODE_CBC)
+    public function __construct($mode = Rijndael_MODE_CBC)
     {
         switch ($mode) {
             case Rijndael_MODE_ECB:

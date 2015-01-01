@@ -74,32 +74,32 @@ namespace Simbacode\Xcrypto\Net;
  *
  * Used to do Diffie-Hellman key exchange and DSA/RSA signature verification.
  */
-require_once('Math/BigInteger.php');
+use Simbacode\Xcrypto\Math\BigInteger;
 
 /**
  * Include Random
  */
-require_once('Crypt/Random.php');
+use Simbacode\Xcrypto\Crypt;
 
 /**
  * Include Hash
  */
-require_once('Crypt/Hash.php');
+use Simbacode\Xcrypto\Crypt\Hash;
 
 /**
  * Include TripleDES
  */
-require_once('Crypt/TripleDES.php');
+use Simbacode\Xcrypto\Crypt\TripleDES;
 
 /**
  * Include RC4
  */
-require_once('Crypt/RC4.php');
+use Simbacode\Xcrypto\Crypt\RC4;
 
 /**
  * Include AES
  */
-require_once('Crypt/AES.php');
+use Simbacode\Xcrypto\Crypt\AES;
 
 /**#@+
  * Execution Bitmap Masks
@@ -615,7 +615,7 @@ class SSH2 {
      * @return SSH2
      * @access public
      */
-    function SSH2($host, $port = 22, $timeout = 10)
+    public function __construct($host, $port = 22, $timeout = 10)
     {
         $this->message_numbers = array(
             1 => 'SSH2_MSG_DISCONNECT',

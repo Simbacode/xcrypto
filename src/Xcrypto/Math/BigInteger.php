@@ -268,7 +268,7 @@ class BigInteger {
      * @return BigInteger
      * @access public
      */
-    function BigInteger($x = 0, $base = 10)
+    public function __construct($x = 0, $base = 10)
     {
         if ( !defined('BigInteger_MODE') ) {
             switch (true) {

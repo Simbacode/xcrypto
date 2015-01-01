@@ -246,7 +246,7 @@ class TripleDES {
      * @return TripleDES
      * @access public
      */
-    function TripleDES($mode = DES_MODE_CBC)
+    public function __construct($mode = DES_MODE_CBC)
     {
         if ( !defined('DES_MODE') ) {
             switch (true) {

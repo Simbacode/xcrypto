@@ -175,7 +175,7 @@ class AES extends Rijndael {
      * @return AES
      * @access public
      */
-    function AES($mode = AES_MODE_CBC)
+    public function __construct($mode = AES_MODE_CBC)
     {
         if ( !defined('AES_MODE') ) {
             switch (true) {

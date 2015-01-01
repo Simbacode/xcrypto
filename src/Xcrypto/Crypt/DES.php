@@ -293,7 +293,7 @@ class DES {
      * @return DES
      * @access public
      */
-    function DES($mode = CRYPT_MODE_DES_CBC)
+    public function __construct($mode = CRYPT_MODE_DES_CBC)
     {
         if ( !defined('DES_MODE') ) {
             switch (true) {

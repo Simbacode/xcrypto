@@ -74,17 +74,17 @@ namespace Simbacode\Xcrypto\Crypt;
 /**
  * Include BigInteger
  */
-require_once('Math/BigInteger.php');
+use Simbacode\Xcrypto\Math\BigInteger;
 
 /**
  * Include Random
  */
-require_once('Crypt/Random.php');
+use Simbacode\Xcrypto\Crypt;
 
 /**
  * Include Hash
  */
-require_once('Crypt/Hash.php');
+use Simbacode\Xcrypto\Crypt\Hash;
 
 /**#@+
  * @access public
@@ -423,7 +423,7 @@ class RSA {
      * @return RSA
      * @access public
      */
-    function RSA()
+    public function __construct()
     {
         if ( !defined('RSA_MODE') ) {
             switch (true) {

@@ -146,7 +146,7 @@ class Hash {
      * @return Hash
      * @access public
      */
-    function Hash($hash = 'sha1')
+    public function __construct($hash = 'sha1')
     {
         if ( !defined('Hash_MODE') ) {
             switch (true) {

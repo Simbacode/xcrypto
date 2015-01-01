@@ -72,7 +72,7 @@ namespace Simbacode\Xcrypto\Net;
  *
  * Used to do RSA encryption.
  */
-require_once('Math/BigInteger.php');
+use Simbacode\Xcrypto\Math\BigInteger;
 
 /**
  * Include Crypt_Null
@@ -82,22 +82,22 @@ require_once('Math/BigInteger.php');
 /**
  * Include DES
  */
-require_once('Crypt/DES.php');
+use Simbacode\Xcrypto\Crypt\DES;
 
 /**
  * Include TripleDES
  */
-require_once('Crypt/TripleDES.php');
+use Simbacode\Xcrypto\Crypt\TripleDES;
 
 /**
  * Include RC4
  */
-require_once('Crypt/RC4.php');
+use Simbacode\Xcrypto\Crypt\RC4;
 
 /**
  * Include Random
  */
-require_once('Crypt/Random.php');
+user \Simbacode\Xcrypto\Crypt;
 
 /**#@+
  * Encryption Methods
@@ -429,7 +429,7 @@ class SSH1 {
      * @return SSH1
      * @access public
      */
-    function SSH1($host, $port = 22, $timeout = 10, $cipher = SSH1_CIPHER_3DES)
+    public function __construct($host, $port = 22, $timeout = 10, $cipher = SSH1_CIPHER_3DES)
     {
         $this->protocol_flags = array(
             1  => 'SSH1_MSG_DISCONNECT',

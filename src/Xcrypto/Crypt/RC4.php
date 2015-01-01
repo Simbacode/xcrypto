@@ -182,7 +182,7 @@ class RC4 {
      * @return RC4
      * @access public
      */
-    function RC4()
+    public function __construct()
     {
         if ( !defined('RC4_MODE') ) {
             switch (true) {

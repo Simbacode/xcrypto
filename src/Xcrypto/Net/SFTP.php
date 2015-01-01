@@ -58,7 +58,7 @@ namespace Simbacode\Xcrypto\Net;
 /**
  * Include SSH2
  */
-require_once('Net/SSH2.php');
+use Simbacode\Xcrypto\Net\SSH2;
 
 /**#@+
  * @access public
@@ -235,7 +235,7 @@ class SFTP extends SSH2 {
      * @return SFTP
      * @access public
      */
-    function SFTP($host, $port = 22, $timeout = 10)
+    public function __construct($host, $port = 22, $timeout = 10)
     {
         parent::SSH2($host, $port, $timeout);
         $this->packet_types = array(
