@@ -1,0 +1,38 @@
+{
+	"name": "simbacode/xcrypto",
+	"description": "The CakePHP Encryption library",
+	"type": "library",
+	"keywords": ["cryptography","encryption","AES"],
+	"homepage": "http://simbacode.com",
+        "version": "0.0.1",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Acellam Guy",
+			"homepage": "http://mistaguy.com"
+		}
+	],
+	"support": {
+		"issues": "https://github.com/Simbacode/xcrypto/issues",
+		"forum": "http://stackoverflow.com/tags/xcrypto",
+		"irc": "irc://irc.freenode.org/Xcrypto",
+		"source": "https://github.com/Simbacode/xcrypto"
+	},
+	"require": {
+		"php": ">=5.4.16",
+                "cakephp/cakephp": "3.0.*-dev"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "*"
+	},
+	"autoload": {
+		"psr-4": {
+			"Xcrypto\\": "src"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Xcrypto\\Test\\": "tests"
+		}
+	}
+}
