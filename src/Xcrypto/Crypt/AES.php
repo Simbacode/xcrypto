@@ -297,7 +297,7 @@ class AES extends Rijndael {
             // rewritten CFB implementation the above outputs the same thing twice.
             if ($this->mode == 'ncfb') {
                 if ($changed) {
-                    $this->ecb = mcrypt_module_open(MRijndael_128, '', MCRYPT_MODE_ECB, '');
+                    $this->ecb = mcrypt_module_open(MCRYPT_Rijndael_128, '', MCRYPT_MODE_ECB, '');
                     mcrypt_generic_init($this->ecb, $this->key, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0");
                 }
 
@@ -372,7 +372,7 @@ class AES extends Rijndael {
             */
             if ($this->mode == 'ncfb') {
                 if ($changed) {
-                    $this->ecb = mcrypt_module_open(MRijndael_128, '', MCRYPT_MODE_ECB, '');
+                    $this->ecb = mcrypt_module_open(MCRYPT_Rijndael_128, '', MCRYPT_MODE_ECB, '');
                     mcrypt_generic_init($this->ecb, $this->key, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0");
                 }
 
@@ -468,8 +468,8 @@ class AES extends Rijndael {
             $mode = $this->mode;
             //$mode = $this->mode == AES_MODE_CTR ? MCRYPT_MODE_ECB : $this->mode;
 
-            $this->demcrypt = mcrypt_module_open(MRijndael_128, '', $mode, '');
-            $this->enmcrypt = mcrypt_module_open(MRijndael_128, '', $mode, '');
+            $this->demcrypt = mcrypt_module_open(MCRYPT_RIJNDAEL_128, '', $mode, '');
+            $this->enmcrypt = mcrypt_module_open(MCRYPT_Rijndael_128, '', $mode, '');
         } // else should mcrypt_generic_deinit be called?
 
         mcrypt_generic_init($this->demcrypt, $this->key, $this->iv);

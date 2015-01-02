@@ -472,7 +472,7 @@ class BigInteger {
      * @access public
      * @internal Converts a base-2**26 number to base-2**8
      */
-    function toBytes($twos_compliment = false)
+    public function toBytes($twos_compliment = false)
     {
         if ($twos_compliment) {
             $comparison = $this->compare(new BigInteger());
