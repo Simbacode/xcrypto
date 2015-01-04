@@ -70,6 +70,28 @@ class Server {
     }
 
     /**
+     * Returns the Decrypted message if you are using the init function for 
+     * all your cryptography.eg 
+     * <code>
+     *  public function aes(){
+     *   
+     *   $PrivateKeyFile = APP. "Controller\Encryption\private.php";
+     *   $PublicKeyFile  = APP. "Controller\Encryption\public.crt";
+     *   
+     *   include $PrivateKeyFile;        
+     *   $server = new Server($PrivateRSAKey,$PublicKeyFile);
+     *   $server->init();
+     *   
+     *   $data = $server->GetDecryptedAESMessage();       
+     *  }
+     * </code>
+     * 
+     * @return type
+     */
+     public function GetDecryptedAESMessage() {
+         return $this->AESMessage;
+     }
+    /**
      * The remote user is sending an AES encrypted message. Decrypt it
      * 
      * @return type
@@ -91,13 +113,40 @@ class Server {
             $aes->setKey($this->Base64UrlDecode($this->key));
             $aes->setIV($this->Base64UrlDecode($this->iv));
             $aes->enablePadding(); // This is PKCS
-
+            
             $this->AESMessage = $aes->decrypt($this->Base64UrlDecode($_POST['data']));
+
+        }
+    }
+ 
+    /**
+     * used to decrypt a message
+     * 
+     * @param type $key
+     * @param type $iv
+     * @param type $data
+     * @return type
+     */
+    public function DecryptMessage($data) {
+          
+        $rsa = new RSA();
+        $rsa->setEncryptionMode(RSA_ENCRYPTION_PKCS1);
+        $rsa->loadKey($this->PrivateKeyFileString);
+
+
+        if ((isset($this->key) && isset($this->iv)) && isset($data)) {
+            $aes = new AES(AES_MODE_CBC);
+
+            $aes->setKeyLength(256);
+            $aes->setKey($this->Base64UrlDecode($this->key));
+            $aes->setIV($this->Base64UrlDecode($this->iv));
+            $aes->enablePadding(); // This is PKCS
+
+            $this->AESMessage = $aes->decrypt($this->Base64UrlDecode($data));
 
             return $this->AESMessage;
         }
     }
-
     /**
      * used to URL decode the text
      * 
