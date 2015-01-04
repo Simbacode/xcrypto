@@ -76,10 +76,6 @@ namespace Simbacode\Xcrypto\Crypt;
  */
 use Simbacode\Xcrypto\Math\BigInteger;
 
-/**
- * Include Random
- */
-use Simbacode\Xcrypto\Crypt;
 
 /**
  * Include Hash

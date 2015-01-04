@@ -1,6 +1,4 @@
 <?php
-namespace Simbacode\Xcrypto\Crypt;
-
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**

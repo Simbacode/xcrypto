@@ -191,6 +191,11 @@ define('BigInteger_KARATSUBA_CUTOFF', 25);
  * @access  public
  * @package BigInteger
  */
+
+$path = dirname(dirname(__FILE__));
+
+include  $path.'\Crypt\Random.php';
+
 class BigInteger {
     /**
      * Holds the BigInteger's value.

@@ -34,3 +34,15 @@ You can as well clone the library in your cakePHP vendor folder but remember to 
 ```
 git clone https://github.com/Simbacode/xcrypto
 ```
+
+##Code Example ##
+```php
+    $PrivateKeyFile = APP. "Controller\Encryption\private.php";
+    $PublicKeyFile  = APP. "Controller\Encryption\public.crt";
+
+    include $PrivateKeyFile;        
+
+    $server = new Server($PrivateRSAKey,$PublicKeyFile);
+
+    $message = $server->GetEncryptedMessage();
+```
