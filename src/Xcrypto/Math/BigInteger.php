@@ -194,7 +194,7 @@ define('BigInteger_KARATSUBA_CUTOFF', 25);
 
 $path = dirname(dirname(__FILE__));
 
-include  $path.'\Crypt\Random.php';
+include  $path.DS.'Crypt'.DS.'Random.php';
 
 class BigInteger {
     /**
