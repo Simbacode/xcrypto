@@ -29,7 +29,7 @@ This a composer cakePHP library and hence it is easy to use.
 require: "simbacode/xcrypto": "dev-master"
 ```
 ### Git Clone ###
-You can as well clone the library in your cakePHP vendor folder but remember to add this library to cakePHP autorun.
+(Tested on cakephp) - You can as well clone the library in your PHP vendor folder but remember to add this library to PHP autorun.
 ```
 git clone https://github.com/Simbacode/xcrypto
 ```
