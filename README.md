@@ -1,13 +1,12 @@
 Xcrypto
 ========================
 
-This an Encryption Library for cakephp.It was inspired by 
+This an Encryption Library for PHP. it has been tested on CakePHP.It was inspired by 
 http://www.codeproject.com/Articles/223081/Encrypting-Communication-between-Csharp-and-PHP
 
 ## Requirements ##
 * PHP 5.4.16+
 * curl enabled
-* cakePHP 3.0+
 
 
 ## Encryption Algorithms ##
