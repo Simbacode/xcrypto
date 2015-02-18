@@ -10,11 +10,8 @@
 
 namespace Simbacode\Xcrypto;
 
-use Cake\Network\Http\Client;
 use Simbacode\Xcrypto\Crypt\RSA;
 use Simbacode\Xcrypto\Crypt\AES;
-use Cake\Utility\Time;
-use Cake\Event\Event;
 
 /**
  * This is main Server encryption class
