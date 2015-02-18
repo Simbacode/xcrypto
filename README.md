@@ -44,7 +44,7 @@ git clone https://github.com/Simbacode/xcrypto
     $server = new Server($PrivateRSAKey, $PublicKeyFile);
     
     // listen to encryptived messages from the client and verify secure connections from the client.
-    // It verifies the public key, the AES key and IV and the sends AES OK to affirm this
+    // It verifies the public key, the AES key, AES IV and then sends AES OK to affirm this
     $server->init();
     //used to retrieve any sent encrypted messages
     $data = $server->GetDecryptedAESMessage();
